@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		9CC757E31C12EE1B00648AAE /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CC757E21C12EE1B00648AAE /* main.cpp */; };
+		9CC757EA1C12EEC300648AAE /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CC757E91C12EEC300648AAE /* SDL2.framework */; };
+		9CC757EE1C12FFF300648AAE /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CC757EC1C12FFF300648AAE /* Camera.cpp */; settings = {ASSET_TAGS = (); }; };
+		9CC757F11C13009F00648AAE /* Mesh.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CC757EF1C13009F00648AAE /* Mesh.cpp */; settings = {ASSET_TAGS = (); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +28,11 @@
 /* Begin PBXFileReference section */
 		9CC757DF1C12EE1B00648AAE /* software-renderer */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "software-renderer"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CC757E21C12EE1B00648AAE /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
+		9CC757E91C12EEC300648AAE /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = ../../../../../Library/Frameworks/SDL2.framework; sourceTree = "<group>"; };
+		9CC757EC1C12FFF300648AAE /* Camera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Camera.cpp; sourceTree = "<group>"; };
+		9CC757ED1C12FFF300648AAE /* Camera.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Camera.hpp; sourceTree = "<group>"; };
+		9CC757EF1C13009F00648AAE /* Mesh.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Mesh.cpp; sourceTree = "<group>"; };
+		9CC757F01C13009F00648AAE /* Mesh.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Mesh.hpp; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -32,6 +40,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9CC757EA1C12EEC300648AAE /* SDL2.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -41,6 +50,7 @@
 		9CC757D61C12EE1B00648AAE = {
 			isa = PBXGroup;
 			children = (
+				9CC757E91C12EEC300648AAE /* SDL2.framework */,
 				9CC757E11C12EE1B00648AAE /* software-renderer */,
 				9CC757E01C12EE1B00648AAE /* Products */,
 			);
@@ -58,6 +68,10 @@
 			isa = PBXGroup;
 			children = (
 				9CC757E21C12EE1B00648AAE /* main.cpp */,
+				9CC757EC1C12FFF300648AAE /* Camera.cpp */,
+				9CC757ED1C12FFF300648AAE /* Camera.hpp */,
+				9CC757EF1C13009F00648AAE /* Mesh.cpp */,
+				9CC757F01C13009F00648AAE /* Mesh.hpp */,
 			);
 			path = "software-renderer";
 			sourceTree = "<group>";
@@ -118,6 +132,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9CC757F11C13009F00648AAE /* Mesh.cpp in Sources */,
+				9CC757EE1C12FFF300648AAE /* Camera.cpp in Sources */,
 				9CC757E31C12EE1B00648AAE /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -205,6 +221,10 @@
 		9CC757E71C12EE1B00648AAE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(LOCAL_LIBRARY_DIR)/Frameworks",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Debug;
@@ -212,6 +232,10 @@
 		9CC757E81C12EE1B00648AAE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(LOCAL_LIBRARY_DIR)/Frameworks",
+				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 			};
 			name = Release;
