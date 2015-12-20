@@ -10,11 +10,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "software-renderer/main.cpp"
-            timestampString = "471473228.396245"
+            timestampString = "471537847.011513"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "164"
-            endingLineNumber = "164"
+            startingLineNumber = "176"
+            endingLineNumber = "176"
             landmarkName = "main(int argc, char ** argv)"
             landmarkType = "7">
          </BreakpointContent>
@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "software-renderer/main.cpp"
-            timestampString = "471473228.396245"
+            timestampString = "471537847.011513"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "159"
-            endingLineNumber = "159"
+            startingLineNumber = "170"
+            endingLineNumber = "170"
             landmarkName = "main(int argc, char ** argv)"
             landmarkType = "7">
          </BreakpointContent>
@@ -74,11 +74,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "software-renderer/main.cpp"
-            timestampString = "471473228.396245"
+            timestampString = "471537847.011513"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "163"
-            endingLineNumber = "163"
+            startingLineNumber = "175"
+            endingLineNumber = "175"
             landmarkName = "main(int argc, char ** argv)"
             landmarkType = "7">
          </BreakpointContent>
@@ -90,11 +90,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "software-renderer/main.cpp"
-            timestampString = "471473096.864313"
+            timestampString = "471537847.011513"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "117"
-            endingLineNumber = "117"
+            startingLineNumber = "121"
+            endingLineNumber = "121"
             landmarkName = "render(Camera* camera, std::list&lt;Mesh*&gt; meshes, Uint32* pixels, float increment)"
             landmarkType = "7">
          </BreakpointContent>
@@ -106,11 +106,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "software-renderer/main.cpp"
-            timestampString = "471473096.864313"
+            timestampString = "471537847.011513"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "109"
-            endingLineNumber = "109"
+            startingLineNumber = "111"
+            endingLineNumber = "111"
             landmarkName = "render(Camera* camera, std::list&lt;Mesh*&gt; meshes, Uint32* pixels, float increment)"
             landmarkType = "7">
             <Locations>
@@ -154,11 +154,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "software-renderer/main.cpp"
-            timestampString = "471473096.864313"
+            timestampString = "471537847.011513"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "95"
-            endingLineNumber = "95"
+            startingLineNumber = "96"
+            endingLineNumber = "96"
             landmarkName = "project(glm::vec3 coord, glm::mat4 transformationMatrix)"
             landmarkType = "7">
          </BreakpointContent>
@@ -170,11 +170,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "software-renderer/main.cpp"
-            timestampString = "471473096.864313"
+            timestampString = "471537847.011513"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "99"
-            endingLineNumber = "99"
+            startingLineNumber = "100"
+            endingLineNumber = "100"
             landmarkName = "project(glm::vec3 coord, glm::mat4 transformationMatrix)"
             landmarkType = "7">
          </BreakpointContent>
@@ -186,11 +186,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "software-renderer/main.cpp"
-            timestampString = "471473096.864313"
+            timestampString = "471537847.011513"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "115"
-            endingLineNumber = "115"
+            startingLineNumber = "119"
+            endingLineNumber = "119"
             landmarkName = "render(Camera* camera, std::list&lt;Mesh*&gt; meshes, Uint32* pixels, float increment)"
             landmarkType = "7">
             <Locations>
@@ -234,11 +234,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "software-renderer/main.cpp"
-            timestampString = "471473096.864313"
+            timestampString = "471537847.011513"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "111"
-            endingLineNumber = "111"
+            startingLineNumber = "113"
+            endingLineNumber = "113"
             landmarkName = "render(Camera* camera, std::list&lt;Mesh*&gt; meshes, Uint32* pixels, float increment)"
             landmarkType = "7">
          </BreakpointContent>
@@ -250,11 +250,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "software-renderer/main.cpp"
-            timestampString = "471473096.864313"
+            timestampString = "471537847.011513"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "114"
-            endingLineNumber = "114"
+            startingLineNumber = "117"
+            endingLineNumber = "117"
             landmarkName = "render(Camera* camera, std::list&lt;Mesh*&gt; meshes, Uint32* pixels, float increment)"
             landmarkType = "7">
          </BreakpointContent>
@@ -266,11 +266,27 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "software-renderer/main.cpp"
-            timestampString = "471473096.864313"
+            timestampString = "471537847.011513"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "107"
-            endingLineNumber = "107"
+            startingLineNumber = "108"
+            endingLineNumber = "108"
+            landmarkName = "render(Camera* camera, std::list&lt;Mesh*&gt; meshes, Uint32* pixels, float increment)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "software-renderer/main.cpp"
+            timestampString = "472218701.571651"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "110"
+            endingLineNumber = "110"
             landmarkName = "render(Camera* camera, std::list&lt;Mesh*&gt; meshes, Uint32* pixels, float increment)"
             landmarkType = "7">
          </BreakpointContent>
