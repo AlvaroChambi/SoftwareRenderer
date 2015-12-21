@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<VariablesViewState
-   version = "1.0">
-   <ContextStates>
-      <ContextState
-         contextName = "render(Camera*, std::__1::list&lt;Mesh*, std::__1::allocator&lt;Mesh*&gt; &gt;, unsigned int*, float):main.cpp">
-      </ContextState>
-   </ContextStates>
-</VariablesViewState>

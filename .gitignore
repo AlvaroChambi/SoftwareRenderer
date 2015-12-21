@@ -1,6 +1,2 @@
-software-renderer.xcodeproj/project.pbxproj
-.idea/
-software-renderer.xcodeproj/.idea/
-software-renderer.xcodeproj/project.xcworkspace/xcshareddata/
-software-renderer.xcodeproj/project.xcworkspace/xcuserdata/
-software-renderer.xcodeproj/xcuserdata/alvaro.chambicampos.xcuserdatad/
+software-renderer.xcodeproj/*
+.idea/*
