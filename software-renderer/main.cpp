@@ -15,6 +15,7 @@
 #include <glm/gtx/transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <list>
+#include "Projection.hpp"
 
 const int FPS = 30;
 const int DELAY_TIME = 1000.0f / FPS;
@@ -105,13 +106,16 @@ void render(Camera* camera, std::list<Mesh*> meshes, Uint32* pixels, float incre
                                  camera->getTarget(),
                                  glm::vec3(0.0f, 1.0f, 0.0f)
                                  );
-    glm::mat4 projectionMatrix = glm::perspective(0.78f, (float)640/480, 0.01f, 1.0f);
+    glm::mat4 projectionMatrix = glm::perspective(glm::radians(60.0f), (float)640/480, 0.01f, 100.0f);
+    glm::mat4 orthographicMatrix = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 0.0f, 100.0f);
     for (Mesh* mesh : meshes) {
         glm::mat4 translationMatrix = glm::translate(mesh->getPosition());
         glm::mat4 rotationMatrix = glm::rotate(increment * 10.0f, glm::vec3(1.0f,1.0f,0.0f));
-        glm::mat4 worldMatrix = translationMatrix * rotationMatrix;
-        //worldMatrix = glm::rotate(worldMatrix,20.0f, glm::vec3(1.0f,0.0f,0.0f));
+        glm::mat4 scaleMatrix = glm::scale(glm::vec3(0.5f, 0.5f, 0.5f));
+        glm::mat4 worldMatrix = translationMatrix * rotationMatrix * scaleMatrix;
+  
         glm::mat4 transformationMatrix = projectionMatrix * viewMatrix * worldMatrix;
+        //glm::mat4 transformationMatrix = orthographicMatrix * viewMatrix * worldMatrix;
         for (glm::vec3 vector : mesh->getVertices()) {
             glm::vec2 point = project(vector, transformationMatrix);
             drawPoint(point, pixels);
@@ -134,13 +138,20 @@ int main(int argc, char ** argv)
     Uint32 * pixels = new Uint32[640 * 480];
     Camera* camera = new Camera;
     camera->setTarget(glm::vec3(0,0,0));
-    camera->setPosition(glm::vec3(0,0,10));
+    camera->setPosition(glm::vec3(0,0,-50));
     Mesh* mesh = buildCude();
     std::list<Mesh*> meshes;
     meshes.push_back(mesh);
     float increment = 0;
-    
+    mesh->setPosition(glm::vec3(0,0,0.0f));
     Uint32 frameStart, frameTime;
+    Color white;
+    white.r = 255;
+    white.g = 255;
+    white.b = 255;
+    white.a = 255;
+    Projection* projection = new Projection();
+    glm::vec2 point = projection->project();
     while (!quit)
     {
         SDL_Event event;
@@ -159,6 +170,7 @@ int main(int argc, char ** argv)
         increment+=0.1f;
         clear(0, 0,0, 0, pixels, 640*480);
         render(camera, meshes, pixels,increment);
+        //putPixel(point.x, point.y,white , pixels);
         SDL_UpdateTexture(texture, NULL, pixels, 640 * sizeof(Uint32));
         SDL_RenderClear(renderer);
         SDL_RenderCopy(renderer, texture, NULL, NULL);

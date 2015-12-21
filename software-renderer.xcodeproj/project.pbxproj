@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		9C4C734C1C2580D0004023D3 /* PinholeCamera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C4C734A1C2580D0004023D3 /* PinholeCamera.cpp */; settings = {ASSET_TAGS = (); }; };
+		9CB8A2101C1B09D500D2022A /* Projection.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CB8A20E1C1B09D500D2022A /* Projection.cpp */; settings = {ASSET_TAGS = (); }; };
 		9CC757E31C12EE1B00648AAE /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CC757E21C12EE1B00648AAE /* main.cpp */; };
 		9CC757EA1C12EEC300648AAE /* SDL2.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9CC757E91C12EEC300648AAE /* SDL2.framework */; };
 		9CC757EE1C12FFF300648AAE /* Camera.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9CC757EC1C12FFF300648AAE /* Camera.cpp */; settings = {ASSET_TAGS = (); }; };
@@ -26,6 +28,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		9C4C734A1C2580D0004023D3 /* PinholeCamera.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = PinholeCamera.cpp; sourceTree = "<group>"; };
+		9C4C734B1C2580D0004023D3 /* PinholeCamera.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = PinholeCamera.hpp; sourceTree = "<group>"; };
+		9CB8A20E1C1B09D500D2022A /* Projection.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = Projection.cpp; sourceTree = "<group>"; };
+		9CB8A20F1C1B09D500D2022A /* Projection.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; path = Projection.hpp; sourceTree = "<group>"; };
 		9CC757DF1C12EE1B00648AAE /* software-renderer */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "software-renderer"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9CC757E21C12EE1B00648AAE /* main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = main.cpp; sourceTree = "<group>"; };
 		9CC757E91C12EEC300648AAE /* SDL2.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL2.framework; path = ../../../../../Library/Frameworks/SDL2.framework; sourceTree = "<group>"; };
@@ -72,6 +78,10 @@
 				9CC757ED1C12FFF300648AAE /* Camera.hpp */,
 				9CC757EF1C13009F00648AAE /* Mesh.cpp */,
 				9CC757F01C13009F00648AAE /* Mesh.hpp */,
+				9CB8A20E1C1B09D500D2022A /* Projection.cpp */,
+				9CB8A20F1C1B09D500D2022A /* Projection.hpp */,
+				9C4C734A1C2580D0004023D3 /* PinholeCamera.cpp */,
+				9C4C734B1C2580D0004023D3 /* PinholeCamera.hpp */,
 			);
 			path = "software-renderer";
 			sourceTree = "<group>";
@@ -132,8 +142,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9CB8A2101C1B09D500D2022A /* Projection.cpp in Sources */,
 				9CC757F11C13009F00648AAE /* Mesh.cpp in Sources */,
 				9CC757EE1C12FFF300648AAE /* Camera.cpp in Sources */,
+				9C4C734C1C2580D0004023D3 /* PinholeCamera.cpp in Sources */,
 				9CC757E31C12EE1B00648AAE /* main.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -259,6 +271,7 @@
 				9CC757E81C12EE1B00648AAE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
