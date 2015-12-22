@@ -94,8 +94,8 @@ glm::vec2 project(glm::vec3 coord, glm::mat4 transformationMatrix)
 {
     glm::vec4 newCoord = glm::vec4(coord, 1.0f);
     glm::vec4 point = transformationMatrix * newCoord;
-    int x = (float)640/2 - point.x;
-    int y = (float)480/2 - point.y;
+    int x = std::min(639, (int)((1 - point.x ) * 640*0.5) ) ;
+    int y = std::min(479,(int)((1 + point.y) * 480*0.5f));
     
     return glm::vec2(x,y);
 }
@@ -106,15 +106,15 @@ void render(Camera* camera, std::list<Mesh*> meshes, Uint32* pixels, float incre
                                  camera->getTarget(),
                                  glm::vec3(0.0f, 1.0f, 0.0f)
                                  );
-    glm::mat4 projectionMatrix = glm::perspective(glm::radians(60.0f), (float)640/480, 0.01f, 100.0f);
+    glm::mat4 projectionMatrix = glm::perspective(glm::radians(90.0f), (float)640/480, 0.01f, 100.0f);
     glm::mat4 orthographicMatrix = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 0.0f, 100.0f);
     for (Mesh* mesh : meshes) {
         glm::mat4 translationMatrix = glm::translate(mesh->getPosition());
         glm::mat4 rotationMatrix = glm::rotate(increment * 10.0f, glm::vec3(1.0f,1.0f,0.0f));
         glm::mat4 scaleMatrix = glm::scale(glm::vec3(0.5f, 0.5f, 0.5f));
-        glm::mat4 worldMatrix = translationMatrix * rotationMatrix * scaleMatrix;
+        glm::mat4 worldMatrix = translationMatrix * rotationMatrix;
   
-        glm::mat4 transformationMatrix = projectionMatrix * viewMatrix * worldMatrix;
+        glm::mat4 transformationMatrix = projectionMatrix;
         //glm::mat4 transformationMatrix = orthographicMatrix * viewMatrix * worldMatrix;
         for (glm::vec3 vector : mesh->getVertices()) {
             glm::vec2 point = project(vector, transformationMatrix);
@@ -138,7 +138,7 @@ int main(int argc, char ** argv)
     Uint32 * pixels = new Uint32[640 * 480];
     Camera* camera = new Camera;
     camera->setTarget(glm::vec3(0,0,0));
-    camera->setPosition(glm::vec3(0,0,-50));
+    camera->setPosition(glm::vec3(0,0,-10));
     Mesh* mesh = buildCude();
     std::list<Mesh*> meshes;
     meshes.push_back(mesh);
@@ -151,7 +151,7 @@ int main(int argc, char ** argv)
     white.b = 255;
     white.a = 255;
     Projection* projection = new Projection();
-    glm::vec2 point = projection->project();
+    projection->testProject();
     while (!quit)
     {
         SDL_Event event;
@@ -175,7 +175,6 @@ int main(int argc, char ** argv)
         SDL_RenderClear(renderer);
         SDL_RenderCopy(renderer, texture, NULL, NULL);
         SDL_RenderPresent(renderer);
-        
         
         frameTime = SDL_GetTicks() - frameStart;
         

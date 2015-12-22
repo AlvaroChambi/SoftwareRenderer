@@ -19,6 +19,8 @@ public:
     ~Projection();
     
     glm::vec2 project();
+    
+    void testProject();
 };
 
 #endif /* Projection_hpp */

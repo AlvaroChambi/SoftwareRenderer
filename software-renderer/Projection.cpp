@@ -37,3 +37,25 @@ glm::vec2 Projection::project()
     if (P_proj_raster.y == height) P_proj_raster.y = height - 1;
     return P_proj_raster;
 }
+
+void Projection::testProject()
+{
+    /*
+    float nearClippingPlane = 0.1;
+    glm::vec3 camera = glm::vec3(0,0,10);
+    
+    glm::mat4 worldMatrix = glm::mat4(1);
+    glm::vec2 screen;
+    screen.x = nearClippingPlane * camera.x / -camera.z;
+    screen.y = nearClippingPlane * camera.y / -camera.z;
+    glm::vec2 pNDC;
+    pNDC.x = 2 * screen.x / (r - l) - (r + l) / (r - l);
+    pNDC.y = 2 * screen.y / (t - b) - (t + b) / (t - b);
+    
+    glm::vec3 pRaster;
+    pRaster.x = (pScreen.x + 1) / 2 * imageWidth;
+    // in raster space y is down so invert direction
+    pRaster.y = (1 - pScreen.y) / 2 * imageHeight;
+    // store the point camera space z-coordinate (as a positive value)
+    pRaster.z = -pCamera.z;*/
+}
