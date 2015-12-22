@@ -15,6 +15,7 @@
 #include <glm/gtx/transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <list>
+#include "projmatrix.h"
 #include "Projection.hpp"
 
 const int FPS = 30;
@@ -94,8 +95,8 @@ glm::vec2 project(glm::vec3 coord, glm::mat4 transformationMatrix)
 {
     glm::vec4 newCoord = glm::vec4(coord, 1.0f);
     glm::vec4 point = transformationMatrix * newCoord;
-    int x = (float)640/2 - point.x;
-    int y = (float)480/2 - point.y;
+    int x = (float)640/2 - point.x ;
+    int y = (float)480/2 - point.y ;
     
     return glm::vec2(x,y);
 }
@@ -111,10 +112,10 @@ void render(Camera* camera, std::list<Mesh*> meshes, Uint32* pixels, float incre
     for (Mesh* mesh : meshes) {
         glm::mat4 translationMatrix = glm::translate(mesh->getPosition());
         glm::mat4 rotationMatrix = glm::rotate(increment * 10.0f, glm::vec3(1.0f,1.0f,0.0f));
-        glm::mat4 scaleMatrix = glm::scale(glm::vec3(0.5f, 0.5f, 0.5f));
+        glm::mat4 scaleMatrix = glm::scale(glm::vec3(1.0f, 1.0f ,1.0f));
         glm::mat4 worldMatrix = translationMatrix * rotationMatrix * scaleMatrix;
   
-        glm::mat4 transformationMatrix = projectionMatrix * viewMatrix * worldMatrix;
+        glm::mat4 transformationMatrix = projectionMatrix * worldMatrix;
         //glm::mat4 transformationMatrix = orthographicMatrix * viewMatrix * worldMatrix;
         for (glm::vec3 vector : mesh->getVertices()) {
             glm::vec2 point = project(vector, transformationMatrix);
@@ -152,6 +153,8 @@ int main(int argc, char ** argv)
     white.a = 255;
     Projection* projection = new Projection();
     glm::vec2 point = projection->project();
+    projmatrix* matrix = new projmatrix;
+   // matrix->startProjection();
     while (!quit)
     {
         SDL_Event event;
@@ -170,7 +173,6 @@ int main(int argc, char ** argv)
         increment+=0.1f;
         clear(0, 0,0, 0, pixels, 640*480);
         render(camera, meshes, pixels,increment);
-        //putPixel(point.x, point.y,white , pixels);
         SDL_UpdateTexture(texture, NULL, pixels, 640 * sizeof(Uint32));
         SDL_RenderClear(renderer);
         SDL_RenderCopy(renderer, texture, NULL, NULL);
