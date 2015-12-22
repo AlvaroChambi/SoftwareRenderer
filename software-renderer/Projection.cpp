@@ -18,6 +18,40 @@ Projection::~Projection()
 
 }
 
+
+glm::mat4 buildProjectionMatrix(const float &angleOfView, const float &near, const float &far)
+{
+    glm::mat4 M = glm::mat4(1);
+    // do some work here
+    float scale = 1 / tan(angleOfView * 0.5 * M_PI / 180);
+    M[0][0] = scale;
+    M[1][1] = scale;
+    M[2][2] = -far / (far - near);
+    M[3][2] = -far * near / (far - near);
+    M[2][3] = -1;
+    M[3][3] = 0;
+    
+    return M;
+}
+
+glm::vec3 multPointMatrix(glm::vec3 in, glm::mat4 M)
+{
+    glm::vec3 out = glm::vec3();
+    //out = in * Mproj;
+    out.x   = in.x * M[0][0] + in.y * M[1][0] + in.z * M[2][0] + /* in.z = 1 */ M[3][0];
+    out.y   = in.x * M[0][1] + in.y * M[1][1] + in.z * M[2][1] + /* in.z = 1 */ M[3][1];
+    out.z   = in.x * M[0][2] + in.y * M[1][2] + in.z * M[2][2] + /* in.z = 1 */ M[3][2];
+    float w = in.x * M[0][3] + in.y * M[1][3] + in.z * M[2][3] + /* in.z = 1 */ M[3][3];
+    
+    // normalize if w is different than 1 (convert from homogeneous to Cartesian coordinates)
+    if (w != 1) {
+        out.x /= w;
+        out.y /= w;
+        out.z /= w;
+    }
+    return out;
+}
+
 glm::vec2 Projection::project()
 {
     int width = 640, height = 480; // dimension of the image in pixels
