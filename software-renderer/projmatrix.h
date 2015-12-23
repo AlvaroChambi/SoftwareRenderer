@@ -32,6 +32,8 @@
 #include <fstream>
 #include "geometry.h"
 #include "vertexdata.h"
+#include <glm/glm.hpp>
+#include <list>
 
 class projmatrix
 {
@@ -45,7 +47,7 @@ public:
     
     void multPointMatrix(const Vec3f &in, Vec3f &out, const Matrix44f &M);
     
-    void startProjection();
+    std::list<glm::vec2> startProjection(glm::mat4 projectionMatrix);
     
 };
 

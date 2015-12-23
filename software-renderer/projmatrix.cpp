@@ -29,6 +29,7 @@
 
 #include "projmatrix.h"
 
+
 //[comment]
 // Set the basic perspective projection matrix
 //[/comment]
@@ -67,24 +68,32 @@ void projmatrix::multPointMatrix(const Vec3f &in, Vec3f &out, const Matrix44f &M
     }
 }
 
-void projmatrix::startProjection()
+std::list<glm::vec2> projmatrix::startProjection(glm::mat4 projectionMatrix)
 {
     uint32_t imageWidth = 512, imageHeight = 512;
     Matrix44f Mproj;
     Matrix44f worldToCamera;
-    //worldToCamera[3][1] = -10;
-    //worldToCamera[3][2] = -20;
+    Matrix44f projection;
+    worldToCamera[3][1] = -10;
+    worldToCamera[3][2] = -32;
     float angleOfView = 90;
     float near = 0.1;
     float far = 100;
-
+    glm::transpose(projectionMatrix);
+    for (int i = 0; i < 4; i++) {
+        for(int j = 0; j < 4; j++){
+            projection[i][j] = projectionMatrix[i][j];
+        }
+    }
     //[comment]
     // Set the basic perspective projection matrix
     //[/comment]
     setProjectionMatrix(angleOfView, near, far, Mproj);
     unsigned char *buffer = new unsigned char[imageWidth * imageHeight];
     memset(buffer, 0x0, imageWidth * imageHeight);
-    
+    uint32_t x ;
+    uint32_t y ;
+    std::list<glm::vec2> pixelList;
     //[comment]
     // Loop over all points
     //[/comment]
@@ -99,20 +108,22 @@ void projmatrix::startProjection()
         //[comment]
         // Project
         //[/comment]
-        multPointMatrix(vertCamera, projectedVert, Mproj);
+        multPointMatrix(vertCamera, projectedVert, projection);
         if (projectedVert.x < -1 || projectedVert.x > 1 || projectedVert.y < -1 || projectedVert.y > 1) continue;
         // convert to raster space and mark the position of the vertex in the image with a simple dot
-        uint32_t x = std::min(imageWidth - 1, (uint32_t)((projectedVert.x + 1) * 0.5 * imageWidth));
-        uint32_t y = std::min(imageHeight - 1, (uint32_t)((1 - (projectedVert.y + 1) * 0.5) * imageHeight));
+        x = std::min(imageWidth - 1, (uint32_t)((projectedVert.x + 1) * 0.5 * imageWidth));
+        y = std::min(imageHeight - 1, (uint32_t)((1 - (projectedVert.y + 1) * 0.5) * imageHeight));
         buffer[y * imageWidth + x] = 255;
+        pixelList.push_back(glm::vec2(x,y));
         //std::cerr << "here sometmes" << std::endl;
     }
     // export to image
+    /*
     std::ofstream ofs;
     ofs.open("./out.ppm");
     ofs << "P5\n" << imageWidth << " " << imageHeight << "\n255\n";
     ofs.write((char*)buffer, imageWidth * imageHeight);
     ofs.close();
-    delete [] buffer;
-
+    delete [] buffer;*/
+    return pixelList;
 }

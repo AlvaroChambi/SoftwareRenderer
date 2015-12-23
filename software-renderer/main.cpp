@@ -114,9 +114,9 @@ void render(Camera* camera, std::list<Mesh*> meshes, Uint32* pixels, float incre
         glm::mat4 translationMatrix = glm::translate(mesh->getPosition());
         glm::mat4 rotationMatrix = glm::rotate(increment * 10.0f, glm::vec3(1.0f,1.0f,0.0f));
         glm::mat4 scaleMatrix = glm::scale(glm::vec3(0.5f, 0.5f, 0.5f));
-        glm::mat4 worldMatrix = translationMatrix * rotationMatrix;
+        glm::mat4 worldMatrix = translationMatrix;
   
-        glm::mat4 transformationMatrix = projectionMatrix;
+        glm::mat4 transformationMatrix = projectionMatrix *viewMatrix * worldMatrix;
 
         //glm::mat4 transformationMatrix = orthographicMatrix * viewMatrix * worldMatrix;
         for (glm::vec3 vector : mesh->getVertices()) {
@@ -129,7 +129,6 @@ void render(Camera* camera, std::list<Mesh*> meshes, Uint32* pixels, float incre
 int main(int argc, char ** argv)
 {
     bool quit = false;
-    SDL_Event event;
     
     SDL_Init(SDL_INIT_VIDEO);
     
@@ -141,12 +140,12 @@ int main(int argc, char ** argv)
     Uint32 * pixels = new Uint32[640 * 480];
     Camera* camera = new Camera;
     camera->setTarget(glm::vec3(0,0,0));
-    camera->setPosition(glm::vec3(0,0,-10));
+    camera->setPosition(glm::vec3(0,0,0));
     Mesh* mesh = buildCude();
     std::list<Mesh*> meshes;
     meshes.push_back(mesh);
     float increment = 0;
-    mesh->setPosition(glm::vec3(0,0,0.0f));
+    mesh->setPosition(glm::vec3(0.0f,0.0f,-10.0f));
     Uint32 frameStart, frameTime;
     Color white;
     white.r = 255;
@@ -158,6 +157,10 @@ int main(int argc, char ** argv)
     glm::vec2 point = projection->project();
     projmatrix* matrix = new projmatrix;
    // matrix->startProjection();
+    glm::mat4 projectionMatrix = glm::perspective(glm::radians(90.0f), (float)640/480, 0.01f, 100.0f);
+    for(glm::vec2 pixel : matrix->startProjection(projectionMatrix)){
+        drawPoint(pixel, pixels);
+    }
     while (!quit)
     {
         SDL_Event event;
@@ -174,8 +177,9 @@ int main(int argc, char ** argv)
         frameStart = SDL_GetTicks();
     
         increment+=0.1f;
-        clear(0, 0,0, 0, pixels, 640*480);
-        render(camera, meshes, pixels,increment);
+        //clear(0, 0,0, 0, pixels, 640*480);
+        //render(camera, meshes, pixels,increment);
+    
         SDL_UpdateTexture(texture, NULL, pixels, 640 * sizeof(Uint32));
         SDL_RenderClear(renderer);
         SDL_RenderCopy(renderer, texture, NULL, NULL);
