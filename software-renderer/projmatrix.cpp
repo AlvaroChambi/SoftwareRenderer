@@ -70,12 +70,12 @@ void projmatrix::multPointMatrix(const Vec3f &in, Vec3f &out, const Matrix44f &M
 
 std::list<glm::vec2> projmatrix::startProjection(glm::mat4 projectionMatrix)
 {
-    uint32_t imageWidth = 512, imageHeight = 512;
+    uint32_t imageWidth = 640, imageHeight = 480;
     Matrix44f Mproj;
     Matrix44f worldToCamera;
     Matrix44f projection;
     worldToCamera[3][1] = -10;
-    worldToCamera[3][2] = -32;
+    worldToCamera[3][2] = -15;
     float angleOfView = 90;
     float near = 0.1;
     float far = 100;
@@ -103,7 +103,7 @@ std::list<glm::vec2> projmatrix::startProjection(glm::mat4 projectionMatrix)
         //[comment]
         // Transform to camera space
         //[/comment]
-        multPointMatrix(vertices[i], vertCamera, worldToCamera);
+        multPointMatrix(verticesP[i], vertCamera, worldToCamera);
         
         //[comment]
         // Project

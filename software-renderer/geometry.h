@@ -28,6 +28,9 @@
 // You should have received a copy of the GNU General Public License
 // along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //[/ignore]
+#ifndef geometry_hpp
+#define geometry_hpp
+
 #include <cstdlib>
 #include <cstdio>
 #include <iostream>
@@ -530,3 +533,5 @@ int main(int argc, char **argv)
     return 0;
 }
 #endif
+
+#endif /* ProjectionMatrix_hpp */

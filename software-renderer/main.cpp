@@ -17,6 +17,7 @@
 #include <list>
 #include "projmatrix.h"
 #include "Projection.hpp"
+#include "RasterizationImplementation.hpp"
 
 const int FPS = 30;
 const int DELAY_TIME = 1000.0f / FPS;
@@ -112,11 +113,11 @@ void render(Camera* camera, std::list<Mesh*> meshes, Uint32* pixels, float incre
     glm::mat4 orthographicMatrix = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 0.0f, 100.0f);
     for (Mesh* mesh : meshes) {
         glm::mat4 translationMatrix = glm::translate(mesh->getPosition());
-        glm::mat4 rotationMatrix = glm::rotate(increment * 10.0f, glm::vec3(1.0f,1.0f,0.0f));
+        glm::mat4 rotationMatrix = glm::rotate(increment * 1.0f, glm::vec3(1.0f,1.0f,0.0f));
         glm::mat4 scaleMatrix = glm::scale(glm::vec3(0.5f, 0.5f, 0.5f));
-        glm::mat4 worldMatrix = translationMatrix;
+        glm::mat4 worldMatrix = translationMatrix * rotationMatrix * scaleMatrix;
   
-        glm::mat4 transformationMatrix = projectionMatrix *viewMatrix * worldMatrix;
+        glm::mat4 transformationMatrix = projectionMatrix * worldMatrix;
 
         //glm::mat4 transformationMatrix = orthographicMatrix * viewMatrix * worldMatrix;
         for (glm::vec3 vector : mesh->getVertices()) {
@@ -153,14 +154,18 @@ int main(int argc, char ** argv)
     white.b = 255;
     white.a = 255;
     Projection* projection = new Projection();
-
+clear(0, 0,0, 0, pixels, 640*480);
     glm::vec2 point = projection->project();
     projmatrix* matrix = new projmatrix;
    // matrix->startProjection();
-    glm::mat4 projectionMatrix = glm::perspective(glm::radians(90.0f), (float)640/480, 0.01f, 100.0f);
+   /* glm::mat4 projectionMatrix = glm::perspective(glm::radians(90.0f), (float)640/480, 0.01f, 100.0f);
     for(glm::vec2 pixel : matrix->startProjection(projectionMatrix)){
         drawPoint(pixel, pixels);
-    }
+    }*/
+    RasterizationImplementation* raster = new RasterizationImplementation();
+     for(glm::vec2 pixel : raster->startRaster()){
+         drawPoint(pixel, pixels);
+     }
     while (!quit)
     {
         SDL_Event event;
