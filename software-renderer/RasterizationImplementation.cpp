@@ -126,8 +126,7 @@ std::list<glm::vec2> RasterizationImplementation::startRaster()
     // compute screen coordinates
     float t, b, l, r;
     
-    computeScreenCoordinates(
-                             filmApertureWidth, filmApertureHeight,
+    computeScreenCoordinates(filmApertureWidth, filmApertureHeight,
                              imageWidth, imageHeight,
                              kOverscan,
                              nearClippingPLane,

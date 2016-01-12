@@ -18,191 +18,65 @@
 #include "projmatrix.h"
 #include "Projection.hpp"
 #include "RasterizationImplementation.hpp"
+#include "Color.h"
 
 const int FPS = 30;
 const int DELAY_TIME = 1000.0f / FPS;
+const int LOAD_OBJ = 1;
+const int PROJECTION = 2;
+const int RASTERIZATION = 3;
 
-typedef unsigned char byte;
-
-int foo()
+std::list<std::pair<int, std::string>> getMenu()
 {
-    glm::vec4 Position = glm::vec4(glm::vec3(0.0), 1.0);
-    glm::mat4 Model = glm::mat4(1.0);
-    Model[3] = glm::vec4( 1.0, 1.0, 0.0, 1.0 );
-    glm::vec4 Transformed = Model * Position;
-    return 0;
+    std::list<std::pair<int, std::string>> mainMenu;
+    std::pair<int, std::string> loadObjFile = std::make_pair(LOAD_OBJ,"Load an .obj file");
+    std::pair<int, std::string> perspectiveProjection = std::make_pair(PROJECTION, "Perspective projection");
+    std::pair<int, std::string> rasterizationStage = std::make_pair(RASTERIZATION, "Rasterization stage");
+    
+    mainMenu.push_back(loadObjFile);
+    mainMenu.push_back(perspectiveProjection);
+    mainMenu.push_back(rasterizationStage);
+    
+    return mainMenu;
 }
 
-struct Color{
-    byte r;
-    byte g;
-    byte b;
-    byte a;
-};
-
-Mesh* buildCude()
+int getSelectedOption()
 {
-    Mesh* mesh = new Mesh();
-    std::vector<glm::vec3> vertices(8);
-    vertices[0] = glm::vec3(-1,1,1);
-    vertices[1] = glm::vec3(1,1,1);
-    vertices[2] = glm::vec3(-1,-1,1);
-    vertices[3] = glm::vec3(-1,-1,-1);
-    vertices[4] = glm::vec3(-1,1,-1);
-    vertices[5] = glm::vec3(1,1,-1);
-    vertices[6] = glm::vec3(1,-1,1);
-    vertices[7] = glm::vec3(1,-1,-1);
-    mesh->setVertices(vertices);
-
-    return mesh;
+    std::cout << "Select an option: ";
+    int option;
+    std::cin >> option;
+    return option;
 }
 
-void clear(byte r, byte g, byte b, byte a, Uint32* buffer, int size)
+void printMenu(std::list<std::pair<int, std::string>> menu)
 {
-    for (Uint32 i = 0; i < size; i++) {
-        Uint32 ulTotal = r;
-        ulTotal = (ulTotal  << 8) + g;
-        ulTotal = (ulTotal  << 8) + b;
-        ulTotal = (ulTotal  << 8) + a;
-        
-        buffer[i]= ulTotal;
+    std::string separator = ".- ";
+    for (std::pair<int, std::string> item : menu) {
+        std::cout << item.first << separator << item.second << std::endl;
     }
 }
 
-void putPixel(int x, int y, Color color, Uint32* pixels)
+Mesh* loadObj(std::string fileName)
 {
-    Uint32 ulTotal = color.r;
-    ulTotal = (ulTotal  << 8) + color.g;
-    ulTotal = (ulTotal  << 8) + color.b;
-    ulTotal = (ulTotal  << 8) + color.a;
-    
-    pixels[x + (y * 640)] = ulTotal;
-}
-
-void drawPoint(glm::vec2 point, Uint32* pixels)
-{
-    Color red;
-    red.r = 255;
-    red.g = 255;
-    red.b = 255;
-    red.a = 255;
-    
-    if (point.x >= 0 && point.y >= 0 && point.x < 640 && point.y < 480) {
-        putPixel(point.x, point.y, red, pixels);
-    }
-}
-
-glm::vec2 project(glm::vec3 coord, glm::mat4 transformationMatrix)
-{
-    glm::vec4 newCoord = glm::vec4(coord, 1.0f);
-    glm::vec4 point = transformationMatrix * newCoord;
-    int x = std::min(639, (int)((1 - point.x ) * 640*0.5) ) ;
-    int y = std::min(479,(int)((1 + point.y) * 480*0.5f));
-
-    
-    return glm::vec2(x,y);
-}
-
-void render(Camera* camera, std::list<Mesh*> meshes, Uint32* pixels, float increment)
-{
-    glm::mat4 viewMatrix = glm::lookAt(camera->getPosition(),
-                                 camera->getTarget(),
-                                 glm::vec3(0.0f, 1.0f, 0.0f)
-                                 );
-    glm::mat4 projectionMatrix = glm::perspective(glm::radians(90.0f), (float)640/480, 0.01f, 100.0f);
-    glm::mat4 orthographicMatrix = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, 0.0f, 100.0f);
-    for (Mesh* mesh : meshes) {
-        glm::mat4 translationMatrix = glm::translate(mesh->getPosition());
-        glm::mat4 rotationMatrix = glm::rotate(increment * 1.0f, glm::vec3(1.0f,1.0f,0.0f));
-        glm::mat4 scaleMatrix = glm::scale(glm::vec3(0.5f, 0.5f, 0.5f));
-        glm::mat4 worldMatrix = translationMatrix * rotationMatrix * scaleMatrix;
-  
-        glm::mat4 transformationMatrix = projectionMatrix * worldMatrix;
-
-        //glm::mat4 transformationMatrix = orthographicMatrix * viewMatrix * worldMatrix;
-        for (glm::vec3 vector : mesh->getVertices()) {
-            glm::vec2 point = project(vector, transformationMatrix);
-            drawPoint(point, pixels);
-        }
-    }
+    return nullptr;
 }
 
 int main(int argc, char ** argv)
 {
-    bool quit = false;
-    
-    SDL_Init(SDL_INIT_VIDEO);
-    
-    SDL_Window * window = SDL_CreateWindow("SDL2 Pixel Drawing",
-                                           SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 640, 480, 0);
-    SDL_Renderer * renderer = SDL_CreateRenderer(window, -1, 0);
-    SDL_Texture * texture = SDL_CreateTexture(renderer,
-                                              SDL_PIXELFORMAT_RGBA8888, SDL_TEXTUREACCESS_STATIC, 640, 480);
-    Uint32 * pixels = new Uint32[640 * 480];
-    Camera* camera = new Camera;
-    camera->setTarget(glm::vec3(0,0,0));
-    camera->setPosition(glm::vec3(0,0,0));
-    Mesh* mesh = buildCude();
-    std::list<Mesh*> meshes;
-    meshes.push_back(mesh);
-    float increment = 0;
-    mesh->setPosition(glm::vec3(0.0f,0.0f,-10.0f));
-    Uint32 frameStart, frameTime;
-    Color white;
-    white.r = 255;
-    white.g = 255;
-    white.b = 255;
-    white.a = 255;
-    Projection* projection = new Projection();
-clear(0, 0,0, 0, pixels, 640*480);
-    glm::vec2 point = projection->project();
-    projmatrix* matrix = new projmatrix;
-   // matrix->startProjection();
-   /* glm::mat4 projectionMatrix = glm::perspective(glm::radians(90.0f), (float)640/480, 0.01f, 100.0f);
-    for(glm::vec2 pixel : matrix->startProjection(projectionMatrix)){
-        drawPoint(pixel, pixels);
-    }*/
-    RasterizationImplementation* raster = new RasterizationImplementation();
-     for(glm::vec2 pixel : raster->startRaster()){
-         drawPoint(pixel, pixels);
-     }
-    while (!quit)
-    {
-        SDL_Event event;
-        while(SDL_PollEvent(&event))
-        {
-            switch (event.type)
-            {
-                case SDL_QUIT:
-                    quit = true;
-                    break;
-            }
+    bool running = true;
+    printMenu(getMenu());
+    while(running){
+        switch (getSelectedOption()) {
+            case LOAD_OBJ:
+                break;
+            case PROJECTION:
+                break;
+            case RASTERIZATION:
+                break;
+            default:
+                running = false;
+                break;
         }
-
-        frameStart = SDL_GetTicks();
-    
-        increment+=0.1f;
-        //clear(0, 0,0, 0, pixels, 640*480);
-        //render(camera, meshes, pixels,increment);
-    
-        SDL_UpdateTexture(texture, NULL, pixels, 640 * sizeof(Uint32));
-        SDL_RenderClear(renderer);
-        SDL_RenderCopy(renderer, texture, NULL, NULL);
-        SDL_RenderPresent(renderer);
-        
-        frameTime = SDL_GetTicks() - frameStart;
-        
-        if(frameTime < DELAY_TIME){
-            SDL_Delay(DELAY_TIME - frameTime);
-        }
-
     }
-    
-    delete[] pixels;
-    SDL_DestroyTexture(texture);
-    SDL_DestroyRenderer(renderer);
-    SDL_DestroyWindow(window);
-    SDL_Quit();
-    
     return 0;
 }
