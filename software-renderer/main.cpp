@@ -15,9 +15,6 @@
 #include <glm/gtx/transform.hpp>
 #include <glm/gtc/type_ptr.hpp>
 #include <list>
-#include "projmatrix.h"
-#include "Projection.hpp"
-#include "RasterizationImplementation.hpp"
 #include "Color.h"
 
 const int FPS = 30;
@@ -56,9 +53,24 @@ void printMenu(std::list<std::pair<int, std::string>> menu)
     }
 }
 
-Mesh* loadObj(std::string fileName)
+Mesh* loadObj()
 {
+    std::cout << ".obj path: ";
+    std::string fileName;
+    std::cin >> fileName;
+    
+    std::cout << "loading file..." << std::endl;
     return nullptr;
+}
+
+void projection()
+{
+    std::cout << "Projection stage." << std::endl;
+}
+
+void rasterizationStage()
+{
+    std::cout << "Rasterization stage" << std::endl;
 }
 
 int main(int argc, char ** argv)
@@ -68,10 +80,13 @@ int main(int argc, char ** argv)
     while(running){
         switch (getSelectedOption()) {
             case LOAD_OBJ:
+                loadObj();
                 break;
             case PROJECTION:
+                projection();
                 break;
             case RASTERIZATION:
+                rasterizationStage();
                 break;
             default:
                 running = false;
