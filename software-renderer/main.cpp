@@ -57,9 +57,11 @@ Mesh* loadObj()
 {
     std::cout << ".obj path: ";
     std::string fileName;
-    std::cin >> fileName;
-    
+    std::cin.ignore();
+    //std::getline(std::cin, fileName);
+    Mesh* mesh = new Mesh;
     std::cout << "loading file..." << std::endl;
+    mesh->loadObj("cube.obj");
     return nullptr;
 }
 

@@ -12,10 +12,15 @@
 #include <glm/glm.hpp>
 #include <string>
 #include <vector>
+#include <iostream> 
+#include <fstream>
+#include <istream>
+#include <sstream>
 
 class Mesh{
 public:
     Mesh();
+    Mesh(std::string filePath);
     Mesh(int numVertices);
     ~Mesh();
     
@@ -25,11 +30,17 @@ public:
     void setRotation(glm::vec3 rotation);
     std::vector<glm::vec3> getVertices();
     void setVertices(std::vector<glm::vec3> vertices);
+    void loadObj(std::string fileName);
 private:
     std::string name;
     glm::vec3 position;
     glm::vec3 rotation;
+    int vertexIndices;
+    int uvIndices;
+    int normalIndices;
     std::vector<glm::vec3> vertices;
+    std::vector<glm::vec2> uvs;
+    std::vector<glm::vec3> normals;
 };
 
 #endif /* Mesh_hpp */
