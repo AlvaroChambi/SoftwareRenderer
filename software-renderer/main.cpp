@@ -58,11 +58,12 @@ Mesh* loadObj()
     std::cout << ".obj path: ";
     std::string fileName;
     std::cin.ignore();
-    //std::getline(std::cin, fileName);
+    std::getline(std::cin, fileName);
     Mesh* mesh = new Mesh;
     std::cout << "loading file..." << std::endl;
-    mesh->loadObj("cube.obj");
-    return nullptr;
+    mesh->loadObj(fileName);
+    std::cout << "Mesh loaded succesfully!" << std::endl;
+    return mesh;
 }
 
 void projection()
