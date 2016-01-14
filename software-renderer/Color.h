@@ -12,12 +12,21 @@
 class Color
 {
 public:
-    Color(int r, int g, int b, int a)
+    Color(int r, int g, int b) :
+        r(r),
+        g(g),
+        b(b),
+        a(255)
     {
-        this->r = r;
-        this->g = g;
-        this->b = b;
-        this->a = a;
+    
+    }
+    Color(int r, int g, int b, int a) :
+        r(r),
+        g(g),
+        b(b),
+        a(a)
+    {
+        
     }
     ~Color(){}
     int r;

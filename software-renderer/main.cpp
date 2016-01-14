@@ -16,6 +16,7 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <list>
 #include "Color.h"
+#include "Screen.hpp"
 
 const int FPS = 30;
 const int DELAY_TIME = 1000.0f / FPS;
@@ -66,9 +67,76 @@ Mesh* loadObj()
     return mesh;
 }
 
+glm::vec2 project(glm::vec3 coord, glm::mat4 transformationMatrix)
+{
+    glm::vec4 newCoord = glm::vec4(coord, 1.0f);
+    glm::vec4 point = transformationMatrix * newCoord;
+    int x = (float)640/2 - point.x;
+    int y = (float)480/2 - point.y;
+    
+    return glm::vec2(x,y);
+}
+
+void render(Camera* camera, Mesh* mesh, float increment, Screen* screen)
+{
+    glm::mat4 viewMatrix = glm::lookAt(camera->getPosition(),
+                                       camera->getTarget(),
+                                       glm::vec3(0.0f, 1.0f, 0.0f)
+                                       );
+    glm::mat4 projectionMatrix = glm::perspective(0.78f, (float)640/480, 0.01f, 1.0f);
+
+    glm::mat4 translationMatrix = glm::translate(mesh->getPosition());
+    glm::mat4 rotationMatrix = glm::rotate(increment * 1.0f, glm::vec3(1.0f,1.0f,0.0f));
+    glm::mat4 scaleMatrix = glm::scale(glm::vec3(20,20,20));
+    glm::mat4 worldMatrix = translationMatrix * rotationMatrix * scaleMatrix;
+    glm::mat4 transformationMatrix = projectionMatrix * viewMatrix * worldMatrix;
+    for (glm::vec3 vector : mesh->getVertices()) {
+        glm::vec2 point = project(vector, transformationMatrix);
+        screen->drawPoint(point, Color(255,255,255));
+    }
+}
+
 void projection()
 {
     std::cout << "Projection stage." << std::endl;
+    
+    bool quit = false;
+    Uint32 frameStart, frameTime;
+    Screen* screen = new Screen(640, 480);
+    Camera* camera = new Camera;
+    camera->setTarget(glm::vec3(0,0,0));
+    camera->setPosition(glm::vec3(0,0,10));
+    Mesh* mesh = new Mesh();
+    mesh->loadObj("cube.obj");
+    screen->init();
+    
+    float increment = 0;
+    while (!quit)
+    {
+        SDL_Event event;
+        while(SDL_PollEvent(&event))
+        {
+            switch (event.type)
+            {
+                case SDL_QUIT:
+                    quit = true;
+                    break;
+            }
+        }
+        
+        frameStart = SDL_GetTicks();
+        increment+=0.1f;
+        screen->clear(Color(0,0,0));
+        render(camera, mesh, increment, screen);
+        screen->present();
+        
+        frameTime = SDL_GetTicks() - frameStart;
+        
+        if(frameTime < DELAY_TIME){
+            SDL_Delay(DELAY_TIME - frameTime);
+        }
+        
+    }
 }
 
 void rasterizationStage()
@@ -87,6 +155,7 @@ int main(int argc, char ** argv)
                 break;
             case PROJECTION:
                 projection();
+                running = false;
                 break;
             case RASTERIZATION:
                 rasterizationStage();
