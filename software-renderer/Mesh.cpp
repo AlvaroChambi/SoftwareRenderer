@@ -32,41 +32,48 @@ void Mesh::loadObj(std::string filePath)
 {
     std::string line;
     std::ifstream file(filePath);
+    std::vector<glm::vec3> tempVertices;
+    std::vector<glm::vec2> tempUvs;
+    std::vector<glm::vec3> tempNormals;
+    std::vector<int> tempIndices;
+    
     while (std::getline(file, line)) {
         std::istringstream in(line);      //make a stream for the line itself
         std::string type;
         in >> type;                  //and read the first whitespace-separated token
         float x, y, z;
         char separator = '/';
-        float vertexIndice, uvIndice, normalIndice;
+        int vertexIndice, uvIndice, normalIndice;
         std::vector<std::string> indices = std::vector<std::string>(3);
         if(type == "v"){
             in >> x >> y >> z;
-            vertices.push_back(glm::vec3(x,y,z));
+            tempVertices.push_back(glm::vec3(x,y,z));
         }else if(type == "vt"){
             in >> x >> y;
-            uvs.push_back(glm::vec2(x,y));
+            tempUvs.push_back(glm::vec2(x,y));
         }else if(type == "vn"){
             in >> x >> y >> z;
-            normals.push_back(glm::vec3(x,y,z));
+            tempNormals.push_back(glm::vec3(x,y,z));
         }else if(type == "f"){
-        
-            for (int i = 0; i < 3; i++) {
+            for(int i = 0; i < 3; i++){
                 in >> indices[i];
-                char * pch;
-                pch = strtok (&indices[i][0],"/");
-                while (pch != NULL)
-                {
-                    printf ("%s",pch);
-                    pch = strtok (NULL, "/");
-                    float value = *pch;
-                    
-                }
-                printf("\n");
+                std::istringstream indicesStream(indices[i]);
+                indicesStream >> vertexIndice >> separator >> uvIndice >> separator >> normalIndice;
+                tempIndices.push_back(vertexIndice);
+                tempIndices.push_back(uvIndice);
+                tempIndices.push_back(normalIndice);
             }
-            //std::istringstream stream0(indices[0]);
-            //stream0 >> vertexIndice >> separator >> uvIndice >> separator >> normalIndice;
         }
+    }
+    
+    for(int i = 0; i < tempIndices.size(); ){
+        int indice = tempIndices[i];
+        vertices.push_back(tempVertices[indice - 1]);
+        i++;
+        uvs.push_back(tempUvs[indice -1]);
+        i++;
+        normals.push_back(tempNormals[indice -1]);
+        i++;
     }
     file.close();
 }

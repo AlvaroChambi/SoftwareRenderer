@@ -16,6 +16,7 @@
 #include <fstream>
 #include <istream>
 #include <sstream>
+#include <list>
 
 class Mesh{
 public:

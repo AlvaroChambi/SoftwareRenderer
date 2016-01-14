@@ -1,2 +1,4 @@
 software-renderer.xcodeproj/*
 .idea/*
+.DS_Store
+software-renderer/.DS_Store
