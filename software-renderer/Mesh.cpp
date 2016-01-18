@@ -21,6 +21,7 @@ Mesh::Mesh(std::string filePath)
     vertexIndices = 0;
     uvIndices = 0;
     normalIndices = 0;
+    numTriangles = 0;
 }
 
 Mesh::~Mesh()
@@ -74,6 +75,7 @@ void Mesh::loadObj(std::string filePath)
         i++;
         normals.push_back(tempNormals[indice -1]);
         i++;
+        numTriangles++;
     }
     file.close();
 }
@@ -106,4 +108,14 @@ std::vector<glm::vec3> Mesh::getVertices()
 void Mesh::setVertices(std::vector<glm::vec3> vertices)
 {
     this->vertices = vertices;
+}
+
+std::vector<glm::vec2> Mesh::getUvs()
+{
+    return uvs;
+}
+
+int Mesh::getNumTriangles()
+{
+    return numTriangles;
 }

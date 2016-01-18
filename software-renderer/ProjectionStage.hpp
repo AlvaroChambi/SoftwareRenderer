@@ -24,7 +24,7 @@ public:
     
     void render(Screen* screen, Camera* camera ,Mesh* mesh, float delta);
 private:
-    glm::vec2 project(glm::vec3 coord, glm::mat4 transformationMatrix);
+    glm::vec2 pointToRaster(glm::vec3 coord, glm::mat4 transformationMatrix);
 };
 
 #endif /* ProjectionStage_hpp */

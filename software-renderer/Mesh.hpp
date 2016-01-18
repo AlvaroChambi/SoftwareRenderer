@@ -32,6 +32,8 @@ public:
     std::vector<glm::vec3> getVertices();
     void setVertices(std::vector<glm::vec3> vertices);
     void loadObj(std::string fileName);
+    std::vector<glm::vec2> getUvs();
+    int getNumTriangles();
 private:
     std::string name;
     glm::vec3 position;
@@ -39,6 +41,7 @@ private:
     int vertexIndices;
     int uvIndices;
     int normalIndices;
+    int numTriangles;
     std::vector<glm::vec3> vertices;
     std::vector<glm::vec2> uvs;
     std::vector<glm::vec3> normals;

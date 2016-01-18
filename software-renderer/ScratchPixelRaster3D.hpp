@@ -15,7 +15,6 @@
 #include <fstream>
 #include <chrono>
 
-
 class ScratchPixelRaster3D : public Process
 {
 public:

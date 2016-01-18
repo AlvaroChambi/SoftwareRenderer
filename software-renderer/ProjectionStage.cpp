@@ -32,12 +32,12 @@ void ProjectionStage::render(Screen *screen, Camera *camera, Mesh *mesh, float d
     glm::mat4 worldMatrix = translationMatrix * rotationMatrix * scaleMatrix;
     glm::mat4 transformationMatrix = projectionMatrix * viewMatrix * worldMatrix;
     for (glm::vec3 vector : mesh->getVertices()) {
-        glm::vec2 point = project(vector, transformationMatrix);
+        glm::vec2 point = pointToRaster(vector, transformationMatrix);
         screen->drawPoint(point, Color(255,255,255));
     }
 }
 
-glm::vec2 ProjectionStage::project(glm::vec3 coord, glm::mat4 transformationMatrix)
+glm::vec2 ProjectionStage::pointToRaster(glm::vec3 coord, glm::mat4 transformationMatrix)
 {
     glm::vec4 newCoord = glm::vec4(coord, 1.0f);
     glm::vec4 point = transformationMatrix * newCoord;
