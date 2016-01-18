@@ -38,6 +38,7 @@ void Renderer::startProcess()
 {
     Uint32 frameStart, frameTime;
     float delta = 0;
+    process->init(screen, camera, mesh, delta);
     while (running)
     {
         SDL_Event event;

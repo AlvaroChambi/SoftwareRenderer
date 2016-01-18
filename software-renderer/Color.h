@@ -12,6 +12,14 @@
 class Color
 {
 public:
+    Color() :
+        r(255),
+        g(255),
+        b(255),
+        a(255)
+    {
+    
+    }
     Color(int r, int g, int b) :
         r(r),
         g(g),

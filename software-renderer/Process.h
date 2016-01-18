@@ -16,6 +16,7 @@
 class Process
 {
 public:
+    virtual void init(Screen* screen, Camera* camera ,Mesh* mesh, float delta){}
     virtual void render(Screen* screen, Camera* camera ,Mesh* mesh, float delta) = 0;
 };
 

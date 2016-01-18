@@ -15,10 +15,15 @@
 #include <list>
 #include "Renderer.hpp"
 #include "ProjectionStage.hpp"
+#include "RasterizationStage.hpp"
+#include "ScratchPixelTriangleRaster.hpp"
+#include "ScratchPixelRaster3D.hpp"
 
 const int LOAD_OBJ = 1;
 const int PROJECTION = 2;
 const int RASTERIZATION = 3;
+const int SCRATCH_PIXEL_TRIANGLE_RASTER = 4;
+const int SCRATCH_PIXEL_3DRASTER = 5;
 
 std::list<std::pair<int, std::string>> getMenu()
 {
@@ -26,10 +31,14 @@ std::list<std::pair<int, std::string>> getMenu()
     std::pair<int, std::string> loadObjFile = std::make_pair(LOAD_OBJ,"Load an .obj file");
     std::pair<int, std::string> perspectiveProjection = std::make_pair(PROJECTION, "Perspective projection");
     std::pair<int, std::string> rasterizationStage = std::make_pair(RASTERIZATION, "Rasterization stage");
+    std::pair<int, std::string> scratchPixelTriangleRaster = std::make_pair(SCRATCH_PIXEL_TRIANGLE_RASTER, "Scratch pixel triangle raster");
+    std::pair<int, std::string> scratchPixel3DRaster = std::make_pair(SCRATCH_PIXEL_3DRASTER, "Scratch pixel Raster 3D");
     
     mainMenu.push_back(loadObjFile);
     mainMenu.push_back(perspectiveProjection);
     mainMenu.push_back(rasterizationStage);
+    mainMenu.push_back(scratchPixelTriangleRaster);
+    mainMenu.push_back(scratchPixel3DRaster);
     
     return mainMenu;
 }
@@ -63,24 +72,42 @@ Mesh* loadObj()
     return mesh;
 }
 
-void projection()
+void projection(Renderer* renderer)
 {
-    std::cout << "Projection stage." << std::endl;
-    Renderer* renderer = new Renderer();
     renderer->init();
     Process* process = new ProjectionStage();
     renderer->setProcess(process);
     renderer->startProcess();
 }
 
-void rasterizationStage()
+void rasterizationStage(Renderer* renderer)
 {
-    std::cout << "Rasterization stage" << std::endl;
+    renderer->init();
+    Process* process = new RasterizationStage;
+    renderer->setProcess(process);
+    renderer->startProcess();
+}
+
+void scratchPixelTriangleRender(Renderer* renderer)
+{
+    renderer->init();
+    Process* process = new ScratchPixelTriangleRaster;
+    renderer->setProcess(process);
+    renderer->startProcess();
+}
+
+void scratchPixel3DRaster(Renderer* renderer)
+{
+    renderer->init();
+    Process* process = new ScratchPixelRaster3D;
+    renderer->setProcess(process);
+    renderer->startProcess();
 }
 
 int main(int argc, char ** argv)
 {
     bool running = true;
+    Renderer* renderer = new Renderer();
     printMenu(getMenu());
     while(running){
         switch (getSelectedOption()) {
@@ -88,11 +115,19 @@ int main(int argc, char ** argv)
                 loadObj();
                 break;
             case PROJECTION:
-                projection();
+                projection(renderer);
                 running = false;
                 break;
             case RASTERIZATION:
-                rasterizationStage();
+                rasterizationStage(renderer);
+                running = false;
+                break;
+            case SCRATCH_PIXEL_TRIANGLE_RASTER:
+                scratchPixelTriangleRender(renderer);
+                running = false;
+                break;
+            case SCRATCH_PIXEL_3DRASTER:
+                scratchPixel3DRaster(renderer);
                 running = false;
                 break;
             default:

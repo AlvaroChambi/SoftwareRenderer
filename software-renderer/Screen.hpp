@@ -23,6 +23,8 @@ public:
     void clear(Color color);
     void drawPoint(glm::vec2 point, Color color);
     void present();
+    int getWidth();
+    int getHeight();
 private:
     int width;
     int height;

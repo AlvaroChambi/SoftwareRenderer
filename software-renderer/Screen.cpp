@@ -70,3 +70,12 @@ void Screen::present()
 
 }
 
+int Screen::getWidth()
+{
+    return width;
+}
+
+int Screen::getHeight()
+{
+    return height;
+}
