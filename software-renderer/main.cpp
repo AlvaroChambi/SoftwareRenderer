@@ -18,12 +18,14 @@
 #include "RasterizationStage.hpp"
 #include "ScratchPixelTriangleRaster.hpp"
 #include "ScratchPixelRaster3D.hpp"
+#include "DepthBufferRasterization.hpp"
 
 const int LOAD_OBJ = 1;
 const int PROJECTION = 2;
 const int RASTERIZATION = 3;
 const int SCRATCH_PIXEL_TRIANGLE_RASTER = 4;
 const int SCRATCH_PIXEL_3DRASTER = 5;
+const int RASTERIZATION_DEPTH_BUFFER = 6;
 
 std::list<std::pair<int, std::string>> getMenu()
 {
@@ -33,12 +35,14 @@ std::list<std::pair<int, std::string>> getMenu()
     std::pair<int, std::string> rasterizationStage = std::make_pair(RASTERIZATION, "Rasterization stage");
     std::pair<int, std::string> scratchPixelTriangleRaster = std::make_pair(SCRATCH_PIXEL_TRIANGLE_RASTER, "Scratch pixel triangle raster");
     std::pair<int, std::string> scratchPixel3DRaster = std::make_pair(SCRATCH_PIXEL_3DRASTER, "Scratch pixel Raster 3D");
+    std::pair<int, std::string> rasterDepthBuffer = std::make_pair(RASTERIZATION_DEPTH_BUFFER, "Rasterization with depth buffer");
     
     mainMenu.push_back(loadObjFile);
     mainMenu.push_back(perspectiveProjection);
     mainMenu.push_back(rasterizationStage);
     mainMenu.push_back(scratchPixelTriangleRaster);
     mainMenu.push_back(scratchPixel3DRaster);
+    mainMenu.push_back(rasterDepthBuffer);
     
     return mainMenu;
 }
@@ -104,6 +108,14 @@ void scratchPixel3DRaster(Renderer* renderer)
     renderer->startProcess();
 }
 
+void rasterWithDetphBuffer(Renderer* renderer)
+{
+    renderer->init();
+    Process* process = new DepthBufferRasterization;
+    renderer->setProcess(process);
+    renderer->startProcess();
+}
+
 int main(int argc, char ** argv)
 {
     bool running = true;
@@ -128,6 +140,10 @@ int main(int argc, char ** argv)
                 break;
             case SCRATCH_PIXEL_3DRASTER:
                 scratchPixel3DRaster(renderer);
+                running = false;
+                break;
+            case RASTERIZATION_DEPTH_BUFFER:
+                rasterWithDetphBuffer(renderer);
                 running = false;
                 break;
             default:
