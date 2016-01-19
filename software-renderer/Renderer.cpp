@@ -39,6 +39,7 @@ void Renderer::startProcess()
     Uint32 frameStart, frameTime;
     float delta = 0;
     process->init(screen, camera, mesh, delta);
+
     while (running)
     {
         SDL_Event event;
@@ -59,6 +60,7 @@ void Renderer::startProcess()
         
         frameTime = SDL_GetTicks() - frameStart;
         
+        std::cout << "fame: " << frameTime << std::endl;
         if(frameTime < DELAY_TIME){
             SDL_Delay(DELAY_TIME - frameTime);
         }

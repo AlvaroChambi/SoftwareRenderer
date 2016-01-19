@@ -23,7 +23,7 @@ public:
     void init(Screen* screen, Camera* camera ,Mesh* mesh, float delta);
     void render(Screen* screen, Camera* camera ,Mesh* mesh, float delta);
 private:
-    
+    glm::mat4 projectionMatrix;
     glm::vec3 pointToRaster(glm::vec3 coord, glm::mat4 transformationMatrix)
     {
         glm::vec4 newCoord = glm::vec4(coord, 1.0f);

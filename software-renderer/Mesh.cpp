@@ -75,8 +75,8 @@ void Mesh::loadObj(std::string filePath)
         i++;
         normals.push_back(tempNormals[indice -1]);
         i++;
-        numTriangles++;
     }
+    numTriangles = (int)tempIndices.size() / 9;
     file.close();
 }
 

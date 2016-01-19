@@ -20,12 +20,12 @@ RasterizationStage::~RasterizationStage()
 
 void RasterizationStage::init(Screen *screen, Camera *camera, Mesh *mesh, float delta)
 {
-
+    projectionMatrix = glm::perspective(0.78f, (float)640/480, 0.01f, 1.0f);
 }
 
 void RasterizationStage::render(Screen *screen, Camera *camera, Mesh *mesh, float delta)
 {
-    for (uint32_t i = 0; i < 12; ++i) {
+    for (uint32_t i = 0; i < mesh->getNumTriangles(); ++i) {
         const glm::vec3 v0 = mesh->getVertices()[i * 3];
         const glm::vec3 v1 = mesh->getVertices()[i * 3 + 1];
         const glm::vec3 v2 = mesh->getVertices()[i * 3 + 2];
@@ -37,7 +37,6 @@ void RasterizationStage::render(Screen *screen, Camera *camera, Mesh *mesh, floa
                                            camera->getTarget(),
                                            glm::vec3(0.0f, 1.0f, 0.0f)
                                            );
-        glm::mat4 projectionMatrix = glm::perspective(0.78f, (float)640/480, 0.01f, 1.0f);
         
         glm::mat4 translationMatrix = glm::translate(mesh->getPosition());
         glm::mat4 rotationMatrix = glm::rotate(delta * 1.0f, glm::vec3(1.0f,1.0f,0.0f));
