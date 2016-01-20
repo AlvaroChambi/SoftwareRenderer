@@ -30,8 +30,7 @@ protected:
         glm::vec4 point = transformationMatrix * newCoord;
         int x = std::min(639, (int)((1 - point.x ) * 640*0.5) ) ;
         int y = std::min(479,(int)((1 + point.y) * 480*0.5f));
-        int z = -point.z;
-        return glm::vec3(x,y,z);
+        return glm::vec3(x,y,point.z);
     }
     
     float min3(const float &a, const float &b, const float &c)

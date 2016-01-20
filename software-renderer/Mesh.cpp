@@ -39,9 +39,9 @@ void Mesh::loadObj(std::string filePath)
     std::vector<int> tempIndices;
     
     while (std::getline(file, line)) {
-        std::istringstream in(line);      //make a stream for the line itself
+        std::istringstream in(line);
         std::string type;
-        in >> type;                  //and read the first whitespace-separated token
+        in >> type;
         float x, y, z;
         char separator = '/';
         int vertexIndice, uvIndice, normalIndice;

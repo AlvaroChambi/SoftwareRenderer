@@ -57,7 +57,7 @@ void Screen::putPixel(int x, int y, Color color)
     ulTotal = (ulTotal  << 8) + color.g;
     ulTotal = (ulTotal  << 8) + color.b;
     ulTotal = (ulTotal  << 8) + color.a;
-    
+
     frameBuffer[x + (y * width)] = ulTotal;
 }
 

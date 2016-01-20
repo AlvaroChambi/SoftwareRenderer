@@ -59,8 +59,7 @@ void Renderer::startProcess()
         screen->present();
         
         frameTime = SDL_GetTicks() - frameStart;
-        
-        std::cout << "fame: " << frameTime << std::endl;
+        std::cout << "frame time: " << frameTime << std::endl;
         if(frameTime < DELAY_TIME){
             SDL_Delay(DELAY_TIME - frameTime);
         }

@@ -12,6 +12,7 @@
 #include <stdio.h>
 
 #include "RasterizationStage.hpp"
+#include "DepthBuffer.h"
 
 class DepthBufferRasterization : public RasterizationStage
 {
@@ -19,11 +20,11 @@ public:
     DepthBufferRasterization();
     ~DepthBufferRasterization();
     
-    
     void init(Screen* screen, Camera* camera ,Mesh* mesh, float delta);
     void render(Screen* screen, Camera* camera ,Mesh* mesh, float delta);
 private:
-    float* depthBuffer;
+    const float farClippingPLane = 1000;
+    DepthBuffer* depthBuffer;
 };
 
 #endif /* DepthBufferRasterization_hpp */
