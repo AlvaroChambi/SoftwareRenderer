@@ -12,12 +12,13 @@
 #include "Screen.hpp"
 #include "Camera.hpp"
 #include "Mesh.hpp"
+#include "Event.h"
 
 class Process
 {
 public:
     virtual void init(Screen* screen, Camera* camera ,Mesh* mesh, float delta){}
-    virtual void render(Screen* screen, Camera* camera ,Mesh* mesh, float delta) = 0;
+    virtual void render(Screen* screen, Camera* camera ,Mesh* mesh, float delta, Event* event) = 0;
 };
 
 #endif /* Process_h */

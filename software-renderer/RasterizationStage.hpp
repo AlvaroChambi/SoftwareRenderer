@@ -21,7 +21,7 @@ public:
     RasterizationStage();
     ~RasterizationStage();
     void init(Screen* screen, Camera* camera ,Mesh* mesh, float delta);
-    void render(Screen* screen, Camera* camera ,Mesh* mesh, float delta);
+    void render(Screen* screen, Camera* camera ,Mesh* mesh, float delta, Event* event);
 protected:
     glm::mat4 projectionMatrix;
     glm::vec3 pointToRaster(glm::vec3 coord, glm::mat4 transformationMatrix)

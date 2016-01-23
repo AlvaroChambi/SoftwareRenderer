@@ -21,7 +21,7 @@ public:
     ScratchPixelRaster3D();
     ~ScratchPixelRaster3D();
     
-    void render(Screen* screen, Camera* camera ,Mesh* mesh, float delta);
+    void render(Screen* screen, Camera* camera ,Mesh* mesh, float delta, Event* event);
     void init(Screen* screen, Camera* camera ,Mesh* mesh, float delta);
     
 private:

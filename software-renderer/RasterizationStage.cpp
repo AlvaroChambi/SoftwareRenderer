@@ -23,8 +23,19 @@ void RasterizationStage::init(Screen *screen, Camera *camera, Mesh *mesh, float 
     projectionMatrix = glm::perspective(0.78f, (float)640/480, 0.01f, 1.0f);
 }
 
-void RasterizationStage::render(Screen *screen, Camera *camera, Mesh *mesh, float delta)
+void RasterizationStage::render(Screen *screen, Camera *camera, Mesh *mesh, float delta, Event* event)
 {
+    switch (event->type) {
+        case ON_MOUSE_DRAG:
+        {
+            glm::vec3 cameraPosition = camera->getPosition();
+            camera->setPosition(glm::vec3(cameraPosition.x + event->xRelative, cameraPosition.y + event->yRelative, cameraPosition.z));
+            break;
+        }
+        default:
+            break;
+    }
+    
     for (uint32_t i = 0; i < mesh->getNumTriangles(); ++i) {
         const glm::vec3 v0 = mesh->getVertices()[i * 3];
         const glm::vec3 v1 = mesh->getVertices()[i * 3 + 1];
@@ -41,7 +52,7 @@ void RasterizationStage::render(Screen *screen, Camera *camera, Mesh *mesh, floa
         glm::mat4 translationMatrix = glm::translate(mesh->getPosition());
         glm::mat4 rotationMatrix = glm::rotate(delta * 1.0f, glm::vec3(1.0f,1.0f,0.0f));
         glm::mat4 scaleMatrix = glm::scale(glm::vec3(0.25,0.25,0.25));
-        glm::mat4 worldMatrix = translationMatrix * rotationMatrix * scaleMatrix;
+        glm::mat4 worldMatrix = translationMatrix * scaleMatrix;
         glm::mat4 transformationMatrix = projectionMatrix * viewMatrix * worldMatrix;
 
     

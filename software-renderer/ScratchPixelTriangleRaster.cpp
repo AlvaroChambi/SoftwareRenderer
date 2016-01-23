@@ -22,7 +22,7 @@ ScratchPixelTriangleRaster::~ScratchPixelTriangleRaster()
 float ScratchPixelTriangleRaster::edgeFunction(const Vec2 &a, const Vec2 &b, const Vec2 &c)
 { return (c[0] - a[0]) * (b[1] - a[1]) - (c[1] - a[1]) * (b[0] - a[0]); }
 
-void ScratchPixelTriangleRaster::render(Screen *screen, Camera *camera, Mesh *mesh, float delta)
+void ScratchPixelTriangleRaster::render(Screen *screen, Camera *camera, Mesh *mesh, float delta, Event* event)
 {
     
     Vec2 v0 = {491.407, 411.407};

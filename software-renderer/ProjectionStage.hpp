@@ -22,7 +22,7 @@ public:
     ProjectionStage();
     ~ProjectionStage();
     
-    void render(Screen* screen, Camera* camera ,Mesh* mesh, float delta);
+    void render(Screen* screen, Camera* camera ,Mesh* mesh, float delta, Event* event);
 private:
     glm::vec2 pointToRaster(glm::vec3 coord, glm::mat4 transformationMatrix);
 };

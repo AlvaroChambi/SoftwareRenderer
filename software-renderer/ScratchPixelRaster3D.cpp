@@ -40,7 +40,7 @@ void ScratchPixelRaster3D::init(Screen *screen, Camera *camera, Mesh *mesh, floa
 
 }
 
-void ScratchPixelRaster3D::render(Screen *screen, Camera *camera, Mesh *mesh, float delta)
+void ScratchPixelRaster3D::render(Screen *screen, Camera *camera, Mesh *mesh, float delta, Event* event)
 {
     Matrix44f cameraToWorld = worldToCamera.inverse();
     

@@ -18,7 +18,7 @@ ProjectionStage::~ProjectionStage()
 
 }
 
-void ProjectionStage::render(Screen *screen, Camera *camera, Mesh *mesh, float delta)
+void ProjectionStage::render(Screen *screen, Camera *camera, Mesh *mesh, float delta, Event* event)
 {
     glm::mat4 viewMatrix = glm::lookAt(camera->getPosition(),
                                        camera->getTarget(),

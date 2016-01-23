@@ -19,7 +19,7 @@ public:
     ~InterpolationRasterization();
     
     void init(Screen* screen, Camera* camera ,Mesh* mesh, float delta);
-    void render(Screen* screen, Camera* camera ,Mesh* mesh, float delta);
+    void render(Screen* screen, Camera* camera ,Mesh* mesh, float delta, Event* event);
 };
 
 #endif /* InterpolationRasterization_hpp */

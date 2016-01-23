@@ -24,7 +24,7 @@ void DepthBufferRasterization::init(Screen *screen, Camera *camera, Mesh *mesh, 
     depthBuffer = new DepthBuffer(screen->getWidth(), screen->getHeight());
 }
 
-void DepthBufferRasterization::render(Screen *screen, Camera *camera, Mesh *mesh, float delta)
+void DepthBufferRasterization::render(Screen *screen, Camera *camera, Mesh *mesh, float delta, Event* event)
 {
     depthBuffer->clear();
     for (uint32_t i = 0; i < mesh->getNumTriangles(); ++i) {

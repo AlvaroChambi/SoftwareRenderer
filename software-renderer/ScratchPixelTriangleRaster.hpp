@@ -23,7 +23,7 @@ public:
     ~ScratchPixelTriangleRaster();
     
     float edgeFunction(const Vec2 &a, const Vec2 &b, const Vec2 &c);
-    void render(Screen* screen, Camera* camera ,Mesh* mesh, float delta);
+    void render(Screen* screen, Camera* camera ,Mesh* mesh, float delta, Event* event);
 
 };
 

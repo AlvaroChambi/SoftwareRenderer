@@ -39,7 +39,9 @@ void Renderer::startProcess()
     Uint32 frameStart, frameTime;
     float delta = 0;
     process->init(screen, camera, mesh, delta);
-
+    
+    bool onClickDown = false;
+    Event* gameEvent = new Event;
     while (running)
     {
         SDL_Event event;
@@ -50,12 +52,36 @@ void Renderer::startProcess()
                 case SDL_QUIT:
                     running = false;
                     break;
+                case SDL_MOUSEMOTION:
+                    if (onClickDown) {
+                        gameEvent->type = ON_MOUSE_DRAG;
+                        gameEvent->x = event.motion.x;
+                        gameEvent->y = event.motion.y;
+                        
+                        gameEvent->xRelative = event.motion.xrel;
+                        gameEvent->yRelative = event.motion.yrel;
+                    }
+                    break;
+                case SDL_MOUSEBUTTONDOWN:
+                    gameEvent->type = ON_MOUSE_DOWN_EVENT;
+                    gameEvent->x = event.motion.x;
+                    gameEvent->y = event.motion.y;
+                    onClickDown = true;
+                    break;
+                case SDL_MOUSEBUTTONUP:
+                    onClickDown = false;
+                    break;
+                case SDL_MOUSEWHEEL:
+                    gameEvent->type = ON_MOUSEWHEEL;
+                    gameEvent->xMousewheel = event.wheel.x;
+                    gameEvent->yMousewheel = event.wheel.y;
+                    break;
             }
         }
         delta+=0.1f;
         frameStart = SDL_GetTicks();
         screen->clear(Color(0,0,0));
-        process->render(screen, camera, mesh, delta);
+        process->render(screen, camera, mesh, delta, gameEvent);
         screen->present();
         
         frameTime = SDL_GetTicks() - frameStart;
