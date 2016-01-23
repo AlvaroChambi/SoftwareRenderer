@@ -22,7 +22,7 @@ public:
     
     void init(Screen* screen, Camera* camera ,Mesh* mesh, float delta);
     void render(Screen* screen, Camera* camera ,Mesh* mesh, float delta);
-private:
+protected:
     const float farClippingPLane = 1000;
     DepthBuffer* depthBuffer;
 };

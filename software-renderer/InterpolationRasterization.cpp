@@ -1,30 +1,29 @@
 //
-//  DepthBufferRasterization.cpp
+//  InterpolationRasterization.cpp
 //  software-renderer
 //
-//  Created by Alvaro Chambi Campos on 19/1/16.
+//  Created by Alvaro Chambi Campos on 21/1/16.
 //  Copyright © 2016 Alvaro Chambi Campos. All rights reserved.
 //
 
-#include "DepthBufferRasterization.hpp"
+#include "InterpolationRasterization.hpp"
 
-DepthBufferRasterization::DepthBufferRasterization()
-{
-    
-}
-
-DepthBufferRasterization::~DepthBufferRasterization()
+InterpolationRasterization::InterpolationRasterization()
 {
 
 }
 
-void DepthBufferRasterization::init(Screen *screen, Camera *camera, Mesh *mesh, float delta)
+InterpolationRasterization::~InterpolationRasterization()
 {
-    RasterizationStage::init(screen, camera, mesh, delta);
-    depthBuffer = new DepthBuffer(screen->getWidth(), screen->getHeight());
+
 }
 
-void DepthBufferRasterization::render(Screen *screen, Camera *camera, Mesh *mesh, float delta)
+void InterpolationRasterization::init(Screen *screen, Camera *camera, Mesh *mesh, float delta)
+{
+    DepthBufferRasterization::init(screen, camera, mesh, delta);
+}
+
+void InterpolationRasterization::render(Screen *screen, Camera *camera, Mesh *mesh, float delta)
 {
     depthBuffer->clear();
     for (uint32_t i = 0; i < mesh->getNumTriangles(); ++i) {
@@ -63,6 +62,16 @@ void DepthBufferRasterization::render(Screen *screen, Camera *camera, Mesh *mesh
         float xmax = max3(rasterV0.x, rasterV1.x, rasterV2.x);
         float ymax = max3(rasterV0.y, rasterV1.y, rasterV2.y);
         
+        // [comment]
+        // Prepare vertex attributes. Divde them by their vertex z-coordinate
+        // (though we use a multiplication here because v.z = 1 / v.z)
+        // [/comment]
+        glm::vec2 st0 = mesh->getUvs()[i * 3];
+        glm::vec2 st1 = mesh->getUvs()[i * 3 + 1];
+        glm::vec2 st2 = mesh->getUvs()[i * 3 + 2];
+        
+        st0 *= rasterV0.z, st1 *= rasterV1.z, st2 *= rasterV2.z;
+        
         // the triangle is out of screen
         if (xmin > screen->getWidth() - 1 || xmax < 0 || ymin > screen->getHeight() - 1 || ymax < 0) continue;
         
@@ -88,11 +97,21 @@ void DepthBufferRasterization::render(Screen *screen, Camera *camera, Mesh *mesh
                     float oneOverZ = rasterV0.z * w0 + rasterV1.z * w1 + rasterV2.z * w2;
                     float z = 1 / oneOverZ;
                     if (depthBuffer->isVisible(x, y, z)) {
+                        glm::vec2 st = st0 * w0 + st1 * w1 + st2 * w2;
+                        st *= z;
+                        const int M = 10;
+                        float checker = (fmod(st.x * M, 1.0) > 0.5) ^ (fmod(st.y * M, 1.0) < 0.5);
+                
+                        int r = checker * 255;
+                        int g = checker * 255;
+                        int b = checker * 255;
+                        
                         depthBuffer->putDepthValue(x, y, z);
-                        screen->drawPoint(glm::vec2(x,y), Color(255,255,255));
+                        screen->drawPoint(glm::vec2(x,y), Color(r,g,b));
                     }
                 }
             }
         }
     }
+
 }
