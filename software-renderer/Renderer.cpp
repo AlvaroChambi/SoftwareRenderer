@@ -29,7 +29,7 @@ void Renderer::init()
     camera->setTarget(glm::vec3(0,0,0));
     camera->setPosition(glm::vec3(0,0,10));
     mesh = new Mesh();
-    mesh->loadObj("/Users/achambi/Development/Software Renderer/software-renderer/cube.obj");
+    mesh->loadObj("cube.obj");
     screen->init();
 
 }
