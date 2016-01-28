@@ -25,17 +25,6 @@ void RasterizationStage::init(Screen *screen, Camera *camera, Mesh *mesh, float 
 
 void RasterizationStage::render(Screen *screen, Camera *camera, Mesh *mesh, float delta, Event* event)
 {
-    switch (event->type) {
-        case ON_MOUSE_DRAG:
-        {
-            glm::vec3 cameraPosition = camera->getPosition();
-            camera->setPosition(glm::vec3(cameraPosition.x + event->xRelative, cameraPosition.y + event->yRelative, cameraPosition.z));
-            break;
-        }
-        default:
-            break;
-    }
-    
     for (uint32_t i = 0; i < mesh->getNumTriangles(); ++i) {
         const glm::vec3 v0 = mesh->getVertices()[i * 3];
         const glm::vec3 v1 = mesh->getVertices()[i * 3 + 1];

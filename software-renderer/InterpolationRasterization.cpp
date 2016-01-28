@@ -25,21 +25,6 @@ void InterpolationRasterization::init(Screen *screen, Camera *camera, Mesh *mesh
 
 void InterpolationRasterization::render(Screen *screen, Camera *camera, Mesh *mesh, float delta, Event* event)
 {
-    switch (event->type) {
-        case ON_MOUSE_DRAG:
-        {
-            glm::vec3 cameraPosition = camera->getPosition();
-            camera->setPosition(glm::vec3(cameraPosition.x + event->xRelative, cameraPosition.y + event->yRelative, cameraPosition.z));
-            break;
-        }
-        case ON_MOUSEWHEEL:
-        {
-            glm::vec3 cameraPosition = camera->getPosition();
-            camera->setPosition(glm::vec3(cameraPosition.x , cameraPosition.y , cameraPosition.z + event->yMousewheel));
-        }
-        default:
-            break;
-    }
     depthBuffer->clear();
     for (uint32_t i = 0; i < mesh->getNumTriangles(); ++i) {
         const glm::vec3 v0 = mesh->getVertices()[i * 3];

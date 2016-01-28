@@ -78,6 +78,22 @@ void Renderer::startProcess()
                     break;
             }
         }
+        switch (gameEvent->type) {
+            case ON_MOUSE_DRAG:
+            {
+                glm::vec3 cameraPosition = camera->getPosition();
+                camera->setPosition(glm::vec3(cameraPosition.x + gameEvent->xRelative, cameraPosition.y + gameEvent->yRelative, cameraPosition.z));
+                break;
+            }
+            case ON_MOUSEWHEEL:
+            {
+                glm::vec3 cameraPosition = camera->getPosition();
+                camera->setPosition(glm::vec3(cameraPosition.x , cameraPosition.y , cameraPosition.z + gameEvent->yMousewheel));
+            }
+            default:
+                break;
+        }
+
         delta+=0.1f;
         frameStart = SDL_GetTicks();
         screen->clear(Color(0,0,0));

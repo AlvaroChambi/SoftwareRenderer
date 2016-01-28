@@ -29,7 +29,7 @@ void ProjectionStage::render(Screen *screen, Camera *camera, Mesh *mesh, float d
     glm::mat4 translationMatrix = glm::translate(mesh->getPosition());
     glm::mat4 rotationMatrix = glm::rotate(delta * 1.0f, glm::vec3(1.0f,1.0f,0.0f));
     glm::mat4 scaleMatrix = glm::scale(glm::vec3(0.25,0.25,0.25));
-    glm::mat4 worldMatrix = translationMatrix * rotationMatrix * scaleMatrix;
+    glm::mat4 worldMatrix = translationMatrix * scaleMatrix;
     glm::mat4 transformationMatrix = projectionMatrix * viewMatrix * worldMatrix;
     for (glm::vec3 vector : mesh->getVertices()) {
         glm::vec2 point = pointToRaster(vector, transformationMatrix);
